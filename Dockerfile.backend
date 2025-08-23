@@ -1,0 +1,24 @@
+#use node:18 base image
+FROM node:18
+
+#working directory is set to /app for following command
+WORKDIR /app
+
+#shallow clone of the github repo
+RUN git clone --depth 1 https://github.com/doananhtingithub40102/mern-app.git . && rm -rf .git
+
+#working directory is set to /app/server for following commands
+WORKDIR /app/server
+
+#sets env var so nmp cache is redirected to temp path that will be later deleted to save space
+ENV npm_config_cache=/tmp/.npm-cache
+
+#install runtime dependencies then delete caches to conserve disk space, try npm ci first if bad then npm
+RUN npm ci --omit=dev --no-audit --no-fund || npm install --production --no-audit --no-fund \
+	&& npm cache clean --force || true \
+	&& rm -rf /root/.npm /tmp/.npm-cache
+
+#container listens on port 5000
+EXPOSE 5000
+
+CMD ["node", "server.js"]
