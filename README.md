@@ -1,4 +1,4 @@
-This repo is for task one of secure dev ops, it's mean to create containers using docker for the mern-app Project 2.
+This repo is for task one of secure dev ops, it's mean to create containers using docker for the mern-app Project 2. Kubernetes has not been added
 
 Instructions
 1. Create an EC2 Instance the same as Task A
